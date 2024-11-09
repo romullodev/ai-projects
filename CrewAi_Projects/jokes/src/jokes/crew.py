@@ -11,13 +11,14 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 @CrewBase
 class JokesCrew:
 	"""Jokes crew"""
-	llm = LLM(
-		model="llama-3.2-90b-vision-preview",  # or another Groq model
-		api_key=GROQ_API_KEY,
-		base_url="https://api.groq.com/openai/v1"
-	)
 
-
+	def __init__(self, model_selected):
+		self.llm = LLM(
+			model=model_selected,
+			api_key=GROQ_API_KEY,
+			base_url="https://api.groq.com/openai/v1"
+		)
+		
 	@agent
 	def joke_generator_agent(self) -> Agent:
 		return Agent(
