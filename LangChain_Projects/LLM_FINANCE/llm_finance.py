@@ -62,7 +62,7 @@ Responda apenas com a categoria.
 
 prompt = PromptTemplate.from_template(template=template)
 #chat = ChatGroq(model="llama-3.1-70b-versatile")
-chat = ChatGroq(model="llama-3.1-8b-instant")
+chat = ChatGroq(model="llama-3.2-90b-vision-preview")
 chain = prompt | chat
 
 

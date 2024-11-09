@@ -1,9 +1,5 @@
 from crewai import Agent, Crew, Process, Task, LLM
-from tools.search_tools import SearchTools
-from tools.browser_tools import BrowserTools
 from crewai.project import CrewBase, agent, crew, task
-from langchain_groq import ChatGroq
-from langchain_openai import ChatOpenAI
 import os
 from dotenv import load_dotenv
 
@@ -16,7 +12,7 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 class JokesCrew:
 	"""Jokes crew"""
 	llm = LLM(
-		model="mixtral-8x7b-32768",  # or another Groq model
+		model="llama-3.2-90b-vision-preview",  # or another Groq model
 		api_key=GROQ_API_KEY,
 		base_url="https://api.groq.com/openai/v1"
 	)

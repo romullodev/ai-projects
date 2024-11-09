@@ -4,7 +4,7 @@ from langchain.vectorstores import FAISS
 from langchain.document_loaders import PyPDFLoader
 from transformers import AutoTokenizer, AutoModel
 
-pdf_file = "regimento_plaza.pdf"
+pdf_file = "LangChain_Projects/RAG_PDF/regimento_plaza.pdf"
 index_file = "regimento_plaza"
 model_name = "sentence-transformers/all-mpnet-base-v2"
 

@@ -1,7 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
-from generate_db import get_db_retriever
+from LangChain_Projects.RAG_PDF.generate_db import get_db_retriever
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
@@ -11,7 +11,7 @@ def search(question):
     {context}
     Pergunta: {input}
     """)
-    llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.0)
+    llm = ChatGroq(model="llama-3.2-90b-vision-preview", temperature=0.0)
     document_chain = create_stuff_documents_chain(llm, prompt)
     retriever_chain = create_retrieval_chain(get_db_retriever(), document_chain)
     response = retriever_chain.invoke({"input": f"{question}"})
