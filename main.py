@@ -16,13 +16,14 @@ from CrewAi_Projects.jokes.src.jokes.jokes_page import jokeGenerator
 model_selected = "llama-3.2-90b-vision-preview"
 
 def rag():
-    createRagSearchPage("Regimento Interno - Plaza Tambiá")
+    global model_selected
+    createRagSearchPage("Regimento Interno - Plaza Tambiá", model_selected)
 
 def finances():
     createPersonalFinancesDashboard("Dashboard de Finanças Pessoais")
 
 def joke():
-    global model_selected  # Indica que a variável global deve ser utilizada
+    global model_selected
     jokeGenerator("Gerador de Piadas", model_selected)    
 
 page_names_to_functions = {
