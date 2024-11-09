@@ -7,11 +7,11 @@ from CrewAi_Projects.jokes.src.jokes.crew import JokesCrew
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
-def createJoke(topic):
+def createJoke(topic, selected_model):
     """
     Run the crew.
     """
     inputs = {
         'topic': topic
     }
-    return JokesCrew().crew().kickoff(inputs=inputs)
+    return JokesCrew(selected_model).crew().kickoff(inputs=inputs)
