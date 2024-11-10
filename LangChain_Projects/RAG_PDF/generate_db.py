@@ -2,42 +2,29 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.document_loaders import PyPDFLoader
-from transformers import AutoTokenizer, AutoModel
 
-pdf_file = "LangChain_Projects/RAG_PDF/regimento_plaza.pdf"
-index_file = "regimento_plaza"
+save_path = "LangChain_Projects/RAG_PDF/rag_document.pdf"
+index_file = "LangChain_Projects/RAG_PDF/index_file"
 model_name = "sentence-transformers/all-mpnet-base-v2"
-
-"""
-Cria um banco de dados vetorial a partir de um PDF utilizando o FAISS e a Langchain.
-
-Args:
-    pdf_file (str): Caminho para o arquivo PDF.
-    index_file (str): Caminho para salvar o índice do FAISS.
-    model_name (str, optional): Nome do modelo Hugging Face a ser utilizado. Defaults to "sentence-transformers/all-mpnet-base-v2".
-"""
-
-# Carregar o PDF e criar documentos
-loader = PyPDFLoader(pdf_file)
-documents = loader.load()
-
-# Carregar o modelo Hugging Face
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModel.from_pretrained(model_name)
-
-# Criar embeddings
 embeddings = HuggingFaceEmbeddings(model_name=model_name)
-text_embeddings = embeddings.embed_documents([doc.page_content for doc in documents])
 
-# Criar o índice FAISS
-#vectorstore = FAISS.from_embeddings(text_embeddings=text_embeddings, embedding=embeddings)
-vectorstore = FAISS.from_documents(documents=documents, embedding=embeddings)
+def saveFile(uploaded_file):
+    # Salva o arquivo, sobrescrevendo se já existir
+    with open(save_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
 
-# Salvar o índice
-vectorstore.save_local(index_file)
+def createDb():
+    # Carregar o PDF e criar documentos
+    loader = PyPDFLoader(save_path)
+    documents = loader.load()
+
+    # Criar o índice FAISS
+    vectorstore = FAISS.from_documents(documents=documents, embedding=embeddings)
+
+    # Salvar o índice
+    vectorstore.save_local(index_file)
 
 def get_db_retriever():
-
     # Carregar o índice
     vectorstore = FAISS.load_local(index_file, embeddings, allow_dangerous_deserialization=True)
     return vectorstore.as_retriever()

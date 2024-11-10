@@ -17,7 +17,7 @@ model_selected = "llama-3.2-90b-vision-preview"
 
 def rag():
     global model_selected
-    createRagSearchPage("Regimento Interno - Plaza Tambiá", model_selected)
+    createRagSearchPage("RAG - Retrieval-Augmented Generation", model_selected)
 
 def finances():
     createPersonalFinancesDashboard("Dashboard de Finanças Pessoais")
@@ -28,7 +28,7 @@ def joke():
 
 page_names_to_functions = {
     "Home": None,
-    "Regimento Interno - Plaza Tambiá": rag,
+    "RAG - Retrieval-Augmented Generation": rag,
     "Dashboard de Finanças Pessoais": finances,
     "Gerador de Piadas": joke,
 }
