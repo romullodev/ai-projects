@@ -1,2 +1,8 @@
 CrewAi Projects/stockanalysis/.env
 CrewAi Projects/jokes/.env
+CrewAi_Projects/jokes/src/jokes/__pycache__/*
+LangChain_Projects/RAG_PDF/__pycache__/*
+LangChain_Projects/LLM_FINANCE/extratos/*
+LangChain_Projects/RAG_PDF/index_file/*
+LangChain_Projects/LLM_FINANCE/finance.csv
+LangChain_Projects/RAG_PDF/rag_document.pdf

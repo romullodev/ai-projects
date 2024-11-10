@@ -11,6 +11,7 @@ st.set_page_config(
 from LangChain_Projects.RAG_PDF.search_page import createRagSearchPage
 from LangChain_Projects.LLM_FINANCE.finance_page import createPersonalFinanceDashboard
 from CrewAi_Projects.jokes.src.jokes.jokes_page import jokeGenerator
+import os
 
 # Variável global para armazenar o modelo selecionado
 model_selected = "llama-3.2-90b-vision-preview"
@@ -42,6 +43,8 @@ def main():
     model_selected = st.selectbox("Selecione o modelo de IA", ["mixtral-8x7b-32768", "llama-3.2-90b-vision-preview", "llama-3.1-70b-versatile"])
     
     page = st.sidebar.selectbox("Navegação", page_names_to_functions.keys())
+    os.environ["GROQ_API_KEY"] = st.sidebar.text_input("Insira sua chave da API GROK:")
+    st.sidebar.button("Inserir")
 
     if page == "Home":
         st.title("Página Principal")

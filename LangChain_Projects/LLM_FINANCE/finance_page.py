@@ -15,7 +15,7 @@ def createPersonalFinanceDashboard(title: str, selcted_model: str):
     st.title(title)
 
     # Upload de OFX
-    uploaded_file = st.file_uploader("Carregar um PDF", type="ofx")
+    uploaded_file = st.file_uploader("Carregar um extrato OFX", type="ofx")
 
     if uploaded_file is None:
         data_frame = None
