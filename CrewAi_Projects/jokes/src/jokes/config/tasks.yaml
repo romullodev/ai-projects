@@ -1,0 +1,20 @@
+generate_joke_task:
+  description: >
+    Crie uma lista enumerada com 10 piadas em português sobre o tema {topic}.
+  expected_output: >
+    Uma lista enumerada com 10 piadas em português sobre o tema {topic}.
+  agent: joke_generator_agent
+
+pick_joke_task:
+  description: >
+    Selecione a melhor piada sobre o tema {topic} dentro de uma lista enumerada de piadas.
+  expected_output: >
+    A melhor piada dentro de uma lista enumerada de piadas.
+  agent: joke_picker_agent
+
+# search_jokes_task:
+#   description: >
+#     Pesquise uma lista enumerada com 10 piadas em português sobre o tema {topic}.
+#   expected_output: >
+#     Uma lista enumerada com 10 piadas em português sobre o tema {topic}.
+#   agent: joke_researcher
