@@ -9,7 +9,7 @@ st.set_page_config(
 )
 
 from LangChain_Projects.RAG_PDF.search_page import createRagSearchPage
-from LangChain_Projects.LLM_FINANCE.dash import createPersonalFinancesDashboard
+from LangChain_Projects.LLM_FINANCE.finance_page import createPersonalFinanceDashboard
 from CrewAi_Projects.jokes.src.jokes.jokes_page import jokeGenerator
 
 # Variável global para armazenar o modelo selecionado
@@ -20,7 +20,8 @@ def rag():
     createRagSearchPage("RAG - Retrieval-Augmented Generation", model_selected)
 
 def finances():
-    createPersonalFinancesDashboard("Dashboard de Finanças Pessoais")
+    global model_selected
+    createPersonalFinanceDashboard("Dashboard de Finanças Pessoais", model_selected)
 
 def joke():
     global model_selected

@@ -16,10 +16,14 @@ def createRagSearchPage(title: str, selected_model: str):
     # Upload de PDF
     uploaded_file = st.file_uploader("Carregar um PDF", type="pdf")
 
+    if uploaded_file is None:
+        retriever_chain = None
+    
     if uploaded_file is not None:
-        saveFile(uploaded_file)
-        createDb()
-        retriever_chain = get_db_retriever()
+        if retriever_chain is None:
+            saveFile(uploaded_file)
+            createDb()
+            retriever_chain = get_db_retriever()
         
     if retriever_chain is not None:
         # Campo de texto para a entrada do usuário
