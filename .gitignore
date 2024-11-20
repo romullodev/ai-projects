@@ -6,6 +6,4 @@ LangChain_Projects/LLM_FINANCE/extratos/*
 LangChain_Projects/RAG_PDF/index_file/*
 LangChain_Projects/LLM_FINANCE/finance.csv
 LangChain_Projects/RAG_PDF/rag_document.pdf
-CrewAi_Projects/jokes/src/jokes/__pycache__/crew.cpython-310.pyc
-LangChain_Projects/LLM_FINANCE/__pycache__/finance_page.cpython-310.pyc
-LangChain_Projects/LLM_FINANCE/__pycache__/generate_finance.cpython-310.pyc
+LangChain_Projects/LLM_FINANCE/__pycache__/*
