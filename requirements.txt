@@ -254,3 +254,4 @@ wsproto==1.2.0
 yarl==1.17.2
 zipp==3.21.0
 pysqlite3-binary==0.5.4
+faiss-cpu==1.9.0.post1
