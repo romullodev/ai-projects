@@ -1,8 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-from tools.browser_tools import BrowserTools
+from CrewAi_Projects.jokes.src.jokes.tools.browser_tools_v2 import BrowserToolsV2
+from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.search_tools_v2 import SearchToolsV2
 from tools.calculator_tools import CalculatorTools
-from tools.search_tools import SearchTools
 from tools.sec_tools import SECTools
 from langchain_community.tools import YahooFinanceNewsTool
 import os
@@ -11,13 +11,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
-GROQ_MODEL_NAME = os.getenv('GROQ_MODEL_NAME')
 
 @CrewBase
 class StockAnalysisCrew:
 	"""Stockanalysis crew"""
 	llm = LLM(
-		model=GROQ_MODEL_NAME,
+		model="mixtral-8x7b-32768",
 		api_key=GROQ_API_KEY,
 		base_url="https://api.groq.com/openai/v1"
 	)
@@ -27,8 +26,8 @@ class StockAnalysisCrew:
 		return Agent(
 			config=self.agents_config['research_analyst_agent'],
 			tools=[
-				BrowserTools.scrape_and_summarize_website,
-				SearchTools.search_internet,
+				BrowserToolsV2.scrape_and_summarize_website,
+				SearchToolsV2.search_internet,
 				CalculatorTools.calculate,
 				SECTools.search_10q,
 				SECTools.search_10k
@@ -44,9 +43,9 @@ class StockAnalysisCrew:
 			config=self.agents_config['financial_analyst_agent'],
 			verbose=True,
 			tools=[
-			BrowserTools.scrape_and_summarize_website,
-			SearchTools.search_internet,
-			SearchTools.search_news,
+			BrowserToolsV2.scrape_and_summarize_website,
+			SearchToolsV2.search_internet,
+			SearchToolsV2.search_news,
 			YahooFinanceNewsTool(),
 			SECTools.search_10q,
 			SECTools.search_10k
@@ -61,14 +60,14 @@ class StockAnalysisCrew:
 			config=self.agents_config['investment_advisor_agent'],
 			verbose=True,
 			tools=[
-				BrowserTools.scrape_and_summarize_website,
-				SearchTools.search_internet,
-				SearchTools.search_news,
+				BrowserToolsV2.scrape_and_summarize_website,
+				SearchToolsV2.search_internet,
+				SearchToolsV2.search_news,
 				CalculatorTools.calculate,
 				YahooFinanceNewsTool()
       		],
 			llm=self.llm,
-			max_iter=30
+			max_iter=5
 		)
 
 
