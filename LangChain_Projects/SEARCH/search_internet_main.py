@@ -1,5 +1,3 @@
-from langchain_groq import ChatGroq
-from langchain.prompts import PromptTemplate
 import requests
 from bs4 import BeautifulSoup
 
