@@ -8,8 +8,8 @@ def get_page_content(sites: list[str]):
     bs_transformer = BeautifulSoupTransformer()
     docs = bs_transformer.transform_documents(
         documents=html, 
-        unwanted_tags=("script", "style"),         
-        tags_to_extract = ("p", "div"),
+        unwanted_tags=("script", "style"),             
+        remove_comments = True,
         )
 
     result = []
