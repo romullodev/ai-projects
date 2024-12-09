@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from crew import StockAnalysisCrew   
+from CrewAi_Projects.stockanalysis.src.stockanalysis.crew import StockAnalysisCrew   
 
 class FinancialCrew:
   
@@ -8,14 +8,14 @@ class FinancialCrew:
 
   def run(self):
     inputs = {
-        'TipSection': "If you do your BEST WORK, I'll give you a $10,000 commission!",
-        'Company': company
+        "TipSection": "If you do your BEST WORK, I'll give you a $10,000 commission!",
+        "Company": "PLTR"
     }
     
     result = StockAnalysisCrew().crew().kickoff(inputs=inputs)
     return result
 
-if __name__ == "__main__":
+def execute_stock_analysis():
   print("## Welcome to Financial Analysis Crew")
   print('-------------------------------')
   company = "PLTR"
@@ -27,4 +27,4 @@ if __name__ == "__main__":
   print("########################\n")
   print(result)
   with open("report.txt", "w+") as f:
-    f.write(result)
+    f.write(str(result))

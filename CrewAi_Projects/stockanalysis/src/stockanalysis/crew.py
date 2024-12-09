@@ -1,12 +1,15 @@
+from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.browser_tools import scrape_and_summarize_website, search_news_on_yahoo
+from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.calculator_tools import calculate
+from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.search_tools import search_internet,search_news
+from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.sec_tools import search_10k, search_10q
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-from CrewAi_Projects.jokes.src.jokes.tools.browser_tools_v2 import BrowserToolsV2
-from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.search_tools_v2 import SearchToolsV2
-from tools.calculator_tools import CalculatorTools
-from tools.sec_tools import SECTools
-from langchain_community.tools import YahooFinanceNewsTool
+
+
 import os
 from dotenv import load_dotenv
+from langchain.tools import Tool
+
 
 load_dotenv()
 
@@ -16,7 +19,7 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 class StockAnalysisCrew:
 	"""Stockanalysis crew"""
 	llm = LLM(
-		model="mixtral-8x7b-32768",
+		model="llama-3.3-70b-versatile",
 		api_key=GROQ_API_KEY,
 		base_url="https://api.groq.com/openai/v1"
 	)
@@ -26,14 +29,14 @@ class StockAnalysisCrew:
 		return Agent(
 			config=self.agents_config['research_analyst_agent'],
 			tools=[
-				BrowserToolsV2.scrape_and_summarize_website,
-				SearchToolsV2.search_internet,
-				CalculatorTools.calculate,
-				SECTools.search_10q,
-				SECTools.search_10k
+				scrape_and_summarize_website,				
+				search_internet,
+				calculate,
+				#search_10q,
+				#search_10k
 			],
 			verbose=True,
-			max_iter=30,
+			max_iter=5,
 			llm=self.llm
 		)
 
@@ -43,15 +46,15 @@ class StockAnalysisCrew:
 			config=self.agents_config['financial_analyst_agent'],
 			verbose=True,
 			tools=[
-			BrowserToolsV2.scrape_and_summarize_website,
-			SearchToolsV2.search_internet,
-			SearchToolsV2.search_news,
-			YahooFinanceNewsTool(),
-			SECTools.search_10q,
-			SECTools.search_10k
+			scrape_and_summarize_website,
+			search_internet,
+			search_news,	
+			#search_10q,
+			#search_10k,
+			#search_news_on_yahoo,
       		],
 			llm=self.llm,
-			max_iter=30
+			max_iter=5
 		)
 	
 	@agent
@@ -60,11 +63,11 @@ class StockAnalysisCrew:
 			config=self.agents_config['investment_advisor_agent'],
 			verbose=True,
 			tools=[
-				BrowserToolsV2.scrape_and_summarize_website,
-				SearchToolsV2.search_internet,
-				SearchToolsV2.search_news,
-				CalculatorTools.calculate,
-				YahooFinanceNewsTool()
+				scrape_and_summarize_website,
+				search_internet,
+				search_news,
+				calculate,
+				#search_news_on_yahoo
       		],
 			llm=self.llm,
 			max_iter=5

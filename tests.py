@@ -1,5 +1,3 @@
-import LangChain_Projects.SCRAPING.scraping_main
+from CrewAi_Projects.stockanalysis.src.stockanalysis.main import execute_stock_analysis
 
-from CrewAi_Projects.stockanalysis.src.stockanalysis import main
-
-main()
+execute_stock_analysis()
