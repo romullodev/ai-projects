@@ -8,7 +8,6 @@ from crewai.project import CrewBase, agent, crew, task
 
 import os
 from dotenv import load_dotenv
-from langchain.tools import Tool
 
 
 load_dotenv()
@@ -18,6 +17,12 @@ GROQ_API_KEY = os.getenv('GROQ_API_KEY')
 @CrewBase
 class StockAnalysisCrew:
 	"""Stockanalysis crew"""
+	llm2 = LLM(
+		model="llama-3.1-8b-instant", 
+		api_key=GROQ_API_KEY,
+		temperature=0.0,
+		base_url="https://api.groq.com/openai/v1"
+	)
 	llm = LLM(
 		model="llama-3.3-70b-versatile",
 		api_key=GROQ_API_KEY,
@@ -29,14 +34,14 @@ class StockAnalysisCrew:
 		return Agent(
 			config=self.agents_config['research_analyst_agent'],
 			tools=[
-				scrape_and_summarize_website,				
+				scrape_and_summarize_website,
 				search_internet,
 				calculate,
-				#search_10q,
-				#search_10k
+				search_10q,
+				search_news_on_yahoo,
 			],
 			verbose=True,
-			max_iter=5,
+			max_iter=30,
 			llm=self.llm
 		)
 
@@ -49,12 +54,12 @@ class StockAnalysisCrew:
 			scrape_and_summarize_website,
 			search_internet,
 			search_news,	
-			#search_10q,
-			#search_10k,
-			#search_news_on_yahoo,
+			search_10q,
+			search_10k,
+			search_news_on_yahoo,
       		],
 			llm=self.llm,
-			max_iter=5
+			max_iter=30
 		)
 	
 	@agent
@@ -67,10 +72,10 @@ class StockAnalysisCrew:
 				search_internet,
 				search_news,
 				calculate,
-				#search_news_on_yahoo
+				search_news_on_yahoo
       		],
-			llm=self.llm,
-			max_iter=5
+			llm=self.llm2,
+			max_iter=30
 		)
 
 

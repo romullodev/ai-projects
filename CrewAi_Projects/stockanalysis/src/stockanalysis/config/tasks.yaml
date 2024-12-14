@@ -1,3 +1,10 @@
+# research_task:
+#   description: >
+#     Obtenha as últimas notícias relevantes da empresa Palantir Technologies. Seu ticket é PLTR.
+#   expected_output: >
+#     Um relatório com as últimas notícias da empresa Palantir Technologies.
+#   agent: research_analyst_agent
+
 research_task:
   description: >
     Collect and summarize recent news articles, press
