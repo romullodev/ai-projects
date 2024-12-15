@@ -44,10 +44,11 @@ financial_analysis_task:
     financial standing, its strengths and weaknesses, 
     and how it fares against its competitors in the current
     market scenario.
-    
+    Make sure to use the most recent data possible.
+
     {TipSection}
 
-    Make sure to use the most recent data possible.
+    {PreviousSummary}
   expected_output: > 
     A complete analysis of the financial situation of the shares
     market health and performance in relation to company {Company}.
@@ -69,6 +70,8 @@ filings_analysis_task:
     your customer.
 
     {TipSection}
+    
+    {PreviousSummary}
   expected_output: > 
     An Analysis of EDGAR's Latest 10-Q and 10-K Filings for the stock in question
   agent: financial_analyst_agent
@@ -93,6 +96,8 @@ recommend_task:
     Make it pretty and well formatted for your customer.
 
     {TipSection}
+    
+    {PreviousSummary}
   expected_output: >
     A detailed investment recommendation about the company in question.
 
