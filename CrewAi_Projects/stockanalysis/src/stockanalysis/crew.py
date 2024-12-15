@@ -4,31 +4,42 @@ from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.search_tools import s
 from CrewAi_Projects.stockanalysis.src.stockanalysis.tools.sec_tools import search_10k, search_10q
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-
-
 import os
 from dotenv import load_dotenv
-
+from langchain_google_genai import ChatGoogleGenerativeAI
+import google.generativeai as genai
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv('GROQ_API_KEY')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+os.environ['GEMINI_API_KEY'] = GEMINI_API_KEY
+
+model_name_prefix = "gemini"
+model_name = "gemini-1.5-flash"
+full_model_name = f"{model_name_prefix}/{model_name}"
+
+# llm2 = LLM(
+# 	model="llama-3.1-8b-instant", 
+# 	api_key=GROQ_API_KEY,
+# 	temperature=0.0,
+# 	base_url="https://api.groq.com/openai/v1"
+# )
+# llm = LLM(
+# 	model=model_name,
+# 	api_key=GROQ_API_KEY,
+# 	base_url="https://api.groq.com/openai/v1"
+# )
+
+llm = LLM(
+	model=full_model_name,
+	api_key=GEMINI_API_KEY,	
+	temperature=0.0,
+)
 
 @CrewBase
 class StockAnalysisCrew:
 	"""Stockanalysis crew"""
-	llm2 = LLM(
-		model="llama-3.1-8b-instant", 
-		api_key=GROQ_API_KEY,
-		temperature=0.0,
-		base_url="https://api.groq.com/openai/v1"
-	)
-	llm = LLM(
-		model="llama-3.3-70b-versatile",
-		api_key=GROQ_API_KEY,
-		base_url="https://api.groq.com/openai/v1"
-	)
-
 	@agent
 	def research_analyst_agent(self) -> Agent:
 		return Agent(
@@ -42,7 +53,7 @@ class StockAnalysisCrew:
 			],
 			verbose=True,
 			max_iter=30,
-			llm=self.llm
+			llm=llm
 		)
 
 	@agent
@@ -58,7 +69,7 @@ class StockAnalysisCrew:
 			search_10k,
 			search_news_on_yahoo,
       		],
-			llm=self.llm,
+			llm=llm,
 			max_iter=30
 		)
 	
@@ -74,7 +85,7 @@ class StockAnalysisCrew:
 				calculate,
 				search_news_on_yahoo
       		],
-			llm=self.llm2,
+			llm=llm,
 			max_iter=30
 		)
 
@@ -117,11 +128,6 @@ class StockAnalysisCrew:
 @CrewBase
 class GenerateResearchReportCrew:
 	"""Research Report Crew"""
-	llm = LLM(
-		model="llama-3.3-70b-versatile",
-		api_key=GROQ_API_KEY,
-		base_url="https://api.groq.com/openai/v1"
-	)
 
 	@agent
 	def research_analyst_agent(self) -> Agent:
@@ -136,7 +142,7 @@ class GenerateResearchReportCrew:
 			],
 			verbose=True,
 			max_iter=30,
-			llm=self.llm
+			llm=llm,
 		)
 
 
@@ -156,15 +162,9 @@ class GenerateResearchReportCrew:
 			verbose=True,
 		)	
 	
-
 @CrewBase
 class GenerateFinancialReportCrew:
 	"""Financial Report Crew"""
-	llm = LLM(
-		model="llama-3.3-70b-versatile",
-		api_key=GROQ_API_KEY,
-		base_url="https://api.groq.com/openai/v1"
-	)
 
 	@agent
 	def financial_analyst_agent(self) -> Agent:
@@ -179,7 +179,7 @@ class GenerateFinancialReportCrew:
 			search_10k,
 			search_news_on_yahoo,
       		],
-			llm=self.llm,
+			llm=llm,
 			max_iter=30
 		)
 
@@ -203,11 +203,6 @@ class GenerateFinancialReportCrew:
 @CrewBase
 class GenerateFillingReportCrew:
 	"""Filling Report Crew"""
-	llm = LLM(
-		model="llama-3.3-70b-versatile",
-		api_key=GROQ_API_KEY,
-		base_url="https://api.groq.com/openai/v1"
-	)
 
 	@agent
 	def financial_analyst_agent(self) -> Agent:
@@ -222,7 +217,7 @@ class GenerateFillingReportCrew:
 			search_10k,
 			search_news_on_yahoo,
       		],
-			llm=self.llm,
+			llm=llm,
 			max_iter=30
 		)
 
@@ -246,11 +241,6 @@ class GenerateFillingReportCrew:
 @CrewBase
 class GenerateRecommendReportCrew:
 	"""Recommend Report Crew"""
-	llm = LLM(
-		model="llama-3.3-70b-versatile",
-		api_key=GROQ_API_KEY,
-		base_url="https://api.groq.com/openai/v1"
-	)
 
 	@agent
 	def investment_advisor_agent(self) -> Agent:
@@ -264,7 +254,7 @@ class GenerateRecommendReportCrew:
 				calculate,
 				search_news_on_yahoo
       		],
-			llm=self.llm,
+			llm=llm,
 			max_iter=30
 		)
 
